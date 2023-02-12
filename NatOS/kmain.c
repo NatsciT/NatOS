@@ -41,7 +41,9 @@ void kmain(unsigned long magic, unsigned long addr)
 	vga_console con;
 
 	vga_console_init(&con);
-	vga_console_write(&con, "Hello, world!");
+	vga_console_write(&con, "Hello, world!\r\n");
+	vga_console_set_color_text(&con, light_blue);
+	vga_console_writefmt(&con, "Formatting is possible: %s %s %s %s %s", "Never", "gonna", "give", "you", "up");
 
 	for (;;);
 }

@@ -21,15 +21,33 @@
     <ClCompile Include="vga_console.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="common\conv.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\memory.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="kmain.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="multiboot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="vga_console.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\conv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kmain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\memory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
