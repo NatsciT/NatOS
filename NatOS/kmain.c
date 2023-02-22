@@ -1,6 +1,30 @@
 #include "kmain.h"
 
 
+
+// Internel function declaration
+void multiboot_entry(void);
+void hardware_init(void);
+
+
+
+static vga_console con;
+
+
+void kmain(unsigned long magic, unsigned long addr)
+{
+	vga_console_init(&con);
+	hardware_init();
+
+	vga_console_write(&con, "Hello, world!\n");
+	vga_console_set_color_text(&con, light_cyan);
+	vga_console_write(&con, "magic: %x\naddr: %x", magic, addr);
+
+	for (;;);
+}
+
+
+
 _declspec(naked) void multiboot_entry(void)
 {
 	__asm
@@ -34,16 +58,8 @@ _declspec(naked) void multiboot_entry(void)
 	}
 }
 
-
-
-void kmain(unsigned long magic, unsigned long addr)
+void hardware_init(void)
 {
-	vga_console con;
-
-	vga_console_init(&con);
-	vga_console_write(&con, "Hello, world!\r\n");
-	vga_console_set_color_text(&con, light_blue);
-	vga_console_writefmt(&con, "Formatting is possible: %s %s %s %s %s", "Never", "gonna", "give", "you", "up");
-
-	for (;;);
+	gdt_init();
+	idt_init(0x8);
 }

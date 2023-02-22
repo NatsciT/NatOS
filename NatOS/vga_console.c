@@ -43,36 +43,7 @@ void vga_console_clear(vga_console* pVgaConsole)
 }
 
 
-
-void vga_console_write(vga_console* pVgaConsole, const char* string)
-{
-	unsigned int i = 0;
-
-	while (string[i])
-	{
-		vga_console_writechar(pVgaConsole, string[i]);
-		i++;
-	}
-}
-
-void vga_console_writechar(vga_console* pVgaConsole, char ch)
-{
-	unsigned short color = (unsigned short)((pVgaConsole->background_color << 4) | (pVgaConsole->text_color));
-
-	if (ch == '\r')
-		pVgaConsole->cursor_x = 0;
-	else if (ch == '\n')
-		cursor_move_down(pVgaConsole);
-	else if (ch < ' ')
-		return;
-	else
-	{
-		pVgaConsole->vga_addr[pVgaConsole->cursor_y * VGA_SCREEN_WIDTH + pVgaConsole->cursor_x] = (color << 8) | (unsigned short)ch;
-		cursor_move_front(pVgaConsole);
-	}
-}
-
-void vga_console_writefmt(vga_console* pVgaConsole, const char* string, ...)
+void vga_console_write(vga_console* pVgaConsole, const char* string, ...)
 {
 	byte* ap = (byte*)((int*)(&string) + 1);
 	unsigned int i = 0;
@@ -101,6 +72,12 @@ void vga_console_writefmt(vga_console* pVgaConsole, const char* string, ...)
 				ap += sizeof(int);
 				break;
 
+			case 'x':
+				hex_to_string(*(int*)ap, temp);
+				vga_console_write(pVgaConsole, temp);
+				ap += sizeof(int);
+				break;
+
 			default:
 				i--;
 				break;
@@ -110,6 +87,24 @@ void vga_console_writefmt(vga_console* pVgaConsole, const char* string, ...)
 			vga_console_writechar(pVgaConsole, string[i]);
 
 		i++;
+	}
+}
+
+void vga_console_writechar(vga_console* pVgaConsole, char ch)
+{
+	unsigned short color = (unsigned short)((pVgaConsole->background_color << 4) | (pVgaConsole->text_color));
+
+	if (ch == '\n')
+	{
+		pVgaConsole->cursor_x = 0;
+		cursor_move_down(pVgaConsole);
+	}
+	else if (ch < ' ')
+		return;
+	else
+	{
+		pVgaConsole->vga_addr[pVgaConsole->cursor_y * VGA_SCREEN_WIDTH + pVgaConsole->cursor_x] = (color << 8) | (unsigned short)ch;
+		cursor_move_front(pVgaConsole);
 	}
 }
 
@@ -172,7 +167,6 @@ void screen_scroll_down(vga_console* pVgaConsole)
 {
 	memcpy(
 		(byte*)&(pVgaConsole->vga_addr[VGA_SCREEN_WIDTH]),
-		sizeof(unsigned short) * VGA_SCREEN_WIDTH * (VGA_SCREEN_HEIGHT - 1),
 		(byte*)pVgaConsole->vga_addr,
 		sizeof(unsigned short) * VGA_SCREEN_WIDTH * VGA_SCREEN_HEIGHT
 	);

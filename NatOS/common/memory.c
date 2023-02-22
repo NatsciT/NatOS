@@ -2,14 +2,16 @@
 
 
 
-bool memcpy(byte* src, size_t src_size, byte* des, size_t des_size)
+void memcpy(void* src, void* des, size_t count)
 {
 	size_t i;
 
-	if (src_size > des_size) return false;
+	for (i = 0; i < count; i++) ((byte*)des)[i] = ((byte*)src)[i];
+}
 
-	for (i = 0; i < src_size; i++)
-		des[i] = src[i];
+void memset(void* target, byte val, size_t count)
+{
+	size_t i;
 
-	return true;
+	for (i = 0; i < count; i++) ((byte*)target)[i] = val;
 }

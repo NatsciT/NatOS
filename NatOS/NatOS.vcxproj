@@ -71,6 +71,9 @@
   <ItemGroup>
     <ClCompile Include="common\conv.c" />
     <ClCompile Include="common\memory.c" />
+    <ClCompile Include="cpu\GDT.c" />
+    <ClCompile Include="cpu\HAL.c" />
+    <ClCompile Include="cpu\IDT.c" />
     <ClCompile Include="vga_console.c" />
     <ClCompile Include="kmain.c" />
   </ItemGroup>
@@ -79,6 +82,10 @@
     <ClInclude Include="common\conv.h" />
     <ClInclude Include="common\memory.h" />
     <ClInclude Include="common\types.h" />
+    <ClInclude Include="CPU.h" />
+    <ClInclude Include="cpu\GDT.h" />
+    <ClInclude Include="cpu\HAL.h" />
+    <ClInclude Include="cpu\IDT.h" />
     <ClInclude Include="vga_console.h" />
     <ClInclude Include="kmain.h" />
     <ClInclude Include="multiboot.h" />

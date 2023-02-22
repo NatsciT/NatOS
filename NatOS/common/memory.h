@@ -2,4 +2,5 @@
 
 #include "types.h"
 
-bool memcpy(byte*, size_t, byte*, size_t);
+void memcpy(void*, void*, size_t);
+void memset(void*, byte, size_t);

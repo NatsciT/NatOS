@@ -8,3 +8,4 @@
 
 
 void int_to_string(int num, char* buffer);
+void hex_to_string(int hex, char* buffer);
